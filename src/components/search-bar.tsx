@@ -1,0 +1,2 @@
+import { ArrowIcon, SearchIcon } from "./icons";
+export function SearchBar({ defaultValue = "", large = false }: { defaultValue?: string; large?: boolean }) { return <form className={`search-bar${large ? " search-bar-large" : ""}`} action="/search"><SearchIcon /><input name="q" defaultValue={defaultValue} placeholder="タイトル、世界観、遊び方で検索" aria-label="ゲームを検索" /><button type="submit"><span>検索する</span><ArrowIcon /></button></form>; }
