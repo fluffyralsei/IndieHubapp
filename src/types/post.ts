@@ -7,6 +7,12 @@ export type Creator = {
   role: string;
   avatarClass: string;
   verified?: boolean;
+  bio?: string;
+  location?: string;
+  website?: string;
+  joinedAt?: string;
+  followers?: number;
+  following?: number;
 };
 
 export type DevelopmentPost = {
