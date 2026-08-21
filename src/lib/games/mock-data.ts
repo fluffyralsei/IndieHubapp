@@ -1,0 +1,15 @@
+import type { Game } from "@/types/game";
+const item = (name: string) => ({ id: name.toLowerCase().replaceAll(" ", "-"), name });
+const makeGame = (game: Partial<Game> & Pick<Game, "id" | "title" | "coverClass">): Game => ({ source: "indiehub", sourceId: game.id, summary: null, coverImageUrl: null, screenshots: [], releaseDate: null, genres: [], tags: [], platforms: [], developers: [], publishers: [], storeLinks: [], officialWebsiteUrl: null, ...game });
+export const genres = ["Action", "Adventure", "RPG", "Strategy", "Puzzle", "Horror"];
+export const tags = ["Pixel Art", "Cozy", "Roguelike", "Story Rich", "Multiplayer", "Atmospheric"];
+export const featuredGames: Game[] = [
+  makeGame({ id: "neon-abyssal", title: "Neon Abyssal", coverClass: "cover-neon", summary: "光を失った深海都市を巡る、ハイスピード探索アクション。静寂の奥に眠る記憶を集め、変わり続ける世界の真相を探ろう。", releaseDate: "2026-05-14", genres: [item("Action")], tags: [item("Pixel Art"), item("Atmospheric")], platforms: [item("PC"), item("Switch")], developers: [item("Night Current")], publishers: [item("Small Signal")], storeLinks: [{ store: "steam", url: "https://store.steampowered.com" }] }),
+  makeGame({ id: "moss-and-moon", title: "Moss & Moon", coverClass: "cover-moss", summary: "月明かりの森で小さな精霊たちと暮らす、穏やかなクラフトアドベンチャー。", releaseDate: "2025-11-02", genres: [item("Adventure")], tags: [item("Cozy"), item("Story Rich")], platforms: [item("PC")], developers: [item("Fern Studio")] }),
+  makeGame({ id: "last-signal", title: "Last Signal", coverClass: "cover-signal", summary: "遠い宇宙から届く最後の通信。その声を辿るナラティブパズル。", releaseDate: "2026-02-19", genres: [item("Puzzle")], tags: [item("Atmospheric"), item("Story Rich")], platforms: [item("PC"), item("PS5")], developers: [item("Orbit Works")] }),
+  makeGame({ id: "tiny-tavern", title: "Tiny Tavern", coverClass: "cover-tavern", summary: "旅人が集う小さな酒場を、あなたらしく育てる経営シミュレーション。", releaseDate: "2025-08-28", genres: [item("Strategy")], tags: [item("Cozy")], platforms: [item("PC"), item("Switch")], developers: [item("Warm Mug Games")] }),
+  makeGame({ id: "void-harvest", title: "Void Harvest", coverClass: "cover-void", summary: "宇宙農場とローグライク探索が交差する、予測不能な一日の物語。", releaseDate: "2026-07-07", genres: [item("RPG")], tags: [item("Roguelike"), item("Pixel Art")], platforms: [item("PC")], developers: [item("Black Soil")] }),
+  makeGame({ id: "paper-kingdom", title: "Paper Kingdom", coverClass: "cover-paper", summary: "折り紙の王国を組み替えて道を作る、手触りのあるパズルゲーム。", releaseDate: "2026-03-21", genres: [item("Puzzle")], tags: [item("Cozy")], platforms: [item("PC"), item("Mobile")], developers: [item("Folded Fox")] }),
+];
+export function searchGames(query?: string, genre?: string, tag?: string) { const q = query?.toLowerCase().trim(); return featuredGames.filter((game) => (!q || game.title.toLowerCase().includes(q) || game.summary?.toLowerCase().includes(q)) && (!genre || game.genres.some((x) => x.name.toLowerCase() === genre.toLowerCase())) && (!tag || game.tags.some((x) => x.name.toLowerCase() === tag.toLowerCase()))); }
+export function getGame(id: string) { return featuredGames.find((game) => game.id === id); }

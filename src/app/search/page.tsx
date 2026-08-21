@@ -1,0 +1,8 @@
+import Link from "next/link";
+import { FilterLink } from "@/components/filter-link";
+import { GameGrid } from "@/components/game-grid";
+import { SearchBar } from "@/components/search-bar";
+import { genres, searchGames, tags } from "@/lib/games/mock-data";
+type Props = { searchParams: Promise<{ q?: string; genre?: string; tag?: string }> };
+export const metadata = { title: "ゲームを探す" };
+export default async function SearchPage({ searchParams }: Props) { const { q = "", genre, tag } = await searchParams; const games = searchGames(q, genre, tag); return <main className="search-page shell"><p className="eyebrow">EXPLORE THE CATALOG</p><div className="search-title"><h1>ゲームを探す</h1><span>{String(games.length).padStart(2, "0")} GAMES</span></div><SearchBar defaultValue={q} large /><div className="search-layout"><aside><div className="aside-section"><p className="filter-label">ジャンル</p><div className="filter-list vertical">{genres.map((name) => <FilterLink key={name} label={name} param="genre" active={genre === name} />)}</div></div><div className="aside-section"><p className="filter-label">タグ</p><div className="filter-list vertical">{tags.map((name) => <FilterLink key={name} label={name} param="tag" subtle active={tag === name} />)}</div></div></aside><section className="results"><div className="results-bar"><p>{q ? <>「<strong>{q}</strong>」の検索結果</> : genre || tag ? <><strong>{genre || tag}</strong> のゲーム</> : "すべてのゲーム"}</p>{(q || genre || tag) && <Link href="/search">条件をクリア ×</Link>}</div>{games.length ? <GameGrid games={games} /> : <div className="empty-state"><span>?</span><h2>ゲームが見つかりませんでした</h2><p>別のキーワードや条件で探してみてください。</p><Link href="/search">すべてのゲームを見る</Link></div>}</section></div></main>; }
